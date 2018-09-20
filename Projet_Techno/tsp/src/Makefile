@@ -1,29 +1,39 @@
-VPATH = C:\Users\Akuma\Documents\Programs\GitHub_Work\Projet_Technologique\tsp\include
+VPATH = ../include
 
-INCLUDE = -I C:\Users\Akuma\Documents\Programs\GitHub_Work\Projet_Technologique\tsp\include
+LPFLAGS = -lm
+
+CPPFLAGS = -I ../include
 
 OBJECTS = memoire.o matrice2d.o tsp.o
 
-make all : $(wildcard *.o) solve-TSP convert-2D-to-full
+all : solve-TSP convert-2D-to-full
+
+solve-TSP : solve-TSP.o $(OBJECTS)
+	$(CC) -o $@ $(LPFLAGS) $< $(OBJECTS)
+
+convert-2D-to-full : convert-2D-to-full.o $(OBJECTS)
+	$(CC) -o $@ $(LPFLAGS) $< $(OBJECTS)
+
+solve-TSP.o : solve-TSP.c $(OBJECTS)
+	$(CC) -c $< $(CPPFLAGS)
+
+convert-2D-to-full.o : convert-2D-to-full.c $(OBJECTS)
+	$(CC) -c $< $(CPPFLAGS)
 
 memoire.o : memoire.c memoire.h
-	gcc -c $< $(INCLUDE)
+	$(CC) -c $< $(CPPFLAGS)
 matrice2d.o : matrice2d.c memoire.h
-	gcc -c $< $(INCLUDE)
+	$(CC) -c $< $(CPPFLAGS)
 tsp.o : tsp.c tsp.h 
-	gcc -c $< $(INCLUDE)
-solve-TSP.o : solve-TSP.c $(OBJECTS)
-	gcc -c $< $(INCLUDE)
-solve-TSP : solve-TSP.o $(OBJECTS)
-	gcc -o $@ $< $(OBJECTS) $(INCLUDE)
-	
-convert-2D-to-full.o : convert-2D-to-full.c $(OBJECTS)
-	gcc -c $< $(INCLUDE) 
-convert-2D-to-full : convert-2D-to-full.o $(OBJECTS)
-	gcc -o $@ $< $(OBJECTS) $(INCLUDE)
+	$(CC) -c $< $(CPPFLAGS)
 
-clean_o :
+
+
+
+clean :
+	rm *.o
+
+cleanwin :
 	del *.o
-clean_all : 
-	del *.o *.exe
+
 

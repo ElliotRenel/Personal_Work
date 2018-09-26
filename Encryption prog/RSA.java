@@ -28,6 +28,10 @@ public class RSA {
         
         return cipher.doFinal(encrypted);
     }
+	static String readFile(String path, Charset encoding) throws Exception {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
 	
 	public static void main(String [] args){
 	// generate public and private keys
@@ -35,7 +39,9 @@ public class RSA {
         PublicKey pubKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
 		
-	
+		String str = readFile("exemple.txt",US-ASCII);
+		System.out.println(str);
+		
 	
 	}
 }

@@ -11,4 +11,4 @@ net_text : net_text.c libgame.a
 	$(CC) -o $@ net_text.c libgame.a
 
 clean :
-	del *.a *.exe
+	del rm *.a

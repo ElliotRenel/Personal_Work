@@ -10,5 +10,7 @@ libgame : $(OBJECTS)
 net_text : net_text.c libgame.a
 	$(CC) -o $@ net_text.c libgame.a
 
+.PHONY: clean
+
 clean :
-	del rm *.a
+	rm *.o *.a net_text

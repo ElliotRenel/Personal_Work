@@ -24,16 +24,11 @@ memoire.o : memoire.c memoire.h
 	$(CC) -c $< $(CPPFLAGS)
 matrice2d.o : matrice2d.c memoire.h
 	$(CC) -c $< $(CPPFLAGS)
-tsp.o : tsp.c tsp.h 
+tsp.o : tsp.c tsp.h
 	$(CC) -c $< $(CPPFLAGS)
 
 
-
+.PHONY : clean
 
 clean :
-	rm *.o
-
-cleanwin :
-	del *.o
-
-
+	rm *.o solve-TSP convert-2D-to-full

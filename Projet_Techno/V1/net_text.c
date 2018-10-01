@@ -16,7 +16,7 @@ int main(void){
 
   cgame sol = new_game_empty();
   game g = default_game(&sol);
-  printf("%d",game_width(g));
+  printf("%u\n",game_width(g));
 
   return EXIT_SUCCESS;
 }

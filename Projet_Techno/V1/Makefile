@@ -1,16 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -std=c99
-OBJECTS = $(wildcard *.o)
+OBJECTS = game.o game_io.o
 
-all : libgame net_text
-
-libgame : $(OBJECTS)
-	ar rcs libgame.a $(OBJECTS)
+all : net_text
 
 net_text : net_text.c libgame.a
-	$(CC) -o $@ net_text.c libgame.a
+	$(CC) $(CFLAGS) -o $@ net_text.c libgame.a
 
-.PHONY: clean
+libgame.a : $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
+
+.PHONY: clean net
 
 clean :
-	rm *.o *.a net_text
+	rm *.a net_text

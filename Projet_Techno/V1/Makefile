@@ -10,7 +10,7 @@ net_text : net_text.c libgame.a
 libgame.a : $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 
-.PHONY: clean net
+.PHONY: clean
 
 clean :
 	rm *.a net_text

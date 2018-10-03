@@ -5,9 +5,12 @@
 
 
 char leafs[4]={'^','>','v','<'};
-char tees[4]={(char)193,(char)195,(char)194,(char)180};
-char corners[4]={(char)192,(char)218,(char)191,(char)217};
 char segments[4]={'|','-','|','-'};
+char corners[4]={(char)192,(char)218,(char)191,(char)217};
+char tees[4]={(char)193,(char)195,(char)194,(char)180};
+
+char* PIECES[4] ={leafs, segments, corners, tees};
+
 
 
 game default_game(cgame* soluce){
@@ -19,26 +22,27 @@ game default_game(cgame* soluce){
   return g;
 }
 
-/*
-void afficher_game(game g){
-  int H = game_height((cgame)g);
-  int W = game_width((cgame)g);
-  int i;
-  char ligne[W];
-  for (i=H*W-1; i>0; i--){
-    if(i%W==W-1){
-      printf("%s\n",ligne);
+
+void afficher_game(cgame g){
+  int H = game_height(g);
+  int W = game_width(g);
+  char str[4]="    ";
+  for(int y=H-1; y>=0; y--){
+    for(int x=W-1; x>=0; x--){
+      piece p = get_piece(g, x, y);
+      direction d = get_current_dir(g, x, y);
+      str[x]=PIECES[p][d];
     }
-    ligne[i%W];
+    printf("%s\n",str);
   }
 }
-*/
+
 
 int main(void){
 
   cgame sol = new_game_empty();
   game g = default_game(&sol);
-  printf("%u",sizeof(g));
+  afficher_game((cgame)g);
 
   return EXIT_SUCCESS;
 }

@@ -26,7 +26,7 @@ game default_game(cgame* soluce){
 void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
-  char str[4]="    ";
+  char str[W];
   for(int y=H-1; y>=0; y--){
     for(int x=W-1; x>=0; x--){
       piece p = get_piece(g, x, y);
@@ -39,7 +39,6 @@ void afficher_game(cgame g){
 
 
 int main(void){
-
   cgame sol = new_game_empty();
   game g = default_game(&sol);
   afficher_game((cgame)g);

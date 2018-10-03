@@ -9,7 +9,7 @@
  char corners[4][5] = {"└","┌","┐","┘"};
  char tees[4][5] = {"┴","├","┬","┤"};
 
-char** PIECES[4] ={*leafs, segments, corners, tees};
+char** PIECES[4] ={leafs, segments, corners, tees};
 
 
 

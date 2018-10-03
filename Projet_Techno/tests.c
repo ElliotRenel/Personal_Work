@@ -3,6 +3,13 @@
 
 int main (int argc, char* argv[], char* env[]){
 
+
+	for (int i = 0 ; i<127; i++){
+		printf("%d : %c\n\n",i,(char)i);
+	}
+
+
+/*
 	char tees[4]={(char)193,(char)195,(char)194,(char)180};
 	char corners[4]={(char)192,(char)218,(char)191,(char)217};
 	char segments[4]={'|','-','|','-'};
@@ -20,6 +27,6 @@ int main (int argc, char* argv[], char* env[]){
 	for(int i=0; i<4; i++){
 		printf(" %c\n\n",leafs[i]);
 	}
-
+*/
 	return EXIT_SUCCESS;
 }

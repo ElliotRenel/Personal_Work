@@ -4,9 +4,13 @@
 int main (int argc, char* argv[], char* env[]){
 
 
-	for (int i = 0 ; i<127; i++){
-		printf("%d : %c\n\n",i,(char)i);
+
+	char s[] = "┬";
+	for(int i = 0; i<4; i++){
+		printf("%c\n",s[i]);
 	}
+	printf("%s\n",s);
+
 
 
 /*

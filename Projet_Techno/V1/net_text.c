@@ -3,12 +3,12 @@
 #include "game.h"
 #include "game_io.h"
 
-/*
+
 char leafs[4]={'^','>','v','<'};
-char tees[4]={'┴','├','┬','┤'};
-char corners[4]={'└','','┐','┘'};
+char tees[4]={(char)193,(char)195,(char)194,(char)180};
+char corners[4]={(char)192,(char)218,(char)191,(char)217};
 char segments[4]={'|','-','|','-'};
-*/
+
 
 game default_game(cgame* soluce){
   piece pe[25]={LEAF,LEAF,LEAF,TEE,CORNER,SEGMENT,CORNER,TEE,CORNER,LEAF,TEE,TEE,SEGMENT,LEAF,LEAF,LEAF,TEE,SEGMENT,SEGMENT,CORNER,LEAF,TEE,SEGMENT,SEGMENT,LEAF};

@@ -26,6 +26,7 @@ game default_game(cgame* soluce){
 void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
+  printf("\n");
   for(int y=H-1; y>=0; y--){
     for(int x=0; x<W; x++){
       piece p = get_piece(g, x, y);
@@ -54,7 +55,7 @@ int main(void){
     int x, y;
     printf("Coordonees de la piece a tourner (format <x> <y>): ");
     scanf("%d %d",&x,&y);
-    
+
   }
 
   return EXIT_SUCCESS;

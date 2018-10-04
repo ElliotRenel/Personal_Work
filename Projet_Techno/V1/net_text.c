@@ -25,9 +25,9 @@ game default_game(cgame* soluce){
 void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
-  printf("\n\n\t   0 1 2 3 4\n");
+  printf("\n\n");
   for(int y=H-1; y>=0; y--){
-    printf("|\t%d ",y);
+    printf("| ");
     for(int x=0; x<W; x++){
       piece p = get_piece(g, x, y);
       direction d = get_current_dir(g, x, y);
@@ -41,10 +41,11 @@ void afficher_game(cgame g){
         printf(" %s",tees[d]);
       }
     }
-    printf(" \t|\n");
+    printf("  |\n");
   }
   printf("\n\n");
 }
+
 
 
 int main(void){

@@ -4,12 +4,12 @@
 #include "game_io.h"
 
 
- char leafs[4][5]={"^",">","v","<"};
- char segments[4][5] = {"|","-","|","-"};
+ char leafs[4]={'^','>','v','<'};
+ char segments[4] = {'|','-','|','-'};
  char corners[4][5] = {"└","┌","┐","┘"};
  char tees[4][5] = {"┴","├","┬","┤"};
 
-char** PIECES[4] ={leafs, segments, corners, tees};
+
 
 
 
@@ -30,7 +30,15 @@ void afficher_game(cgame g){
     for(int x=0; x>=W-1; x++){
       piece p = get_piece(g, x, y);
       direction d = get_current_dir(g, x, y);
-      printf("%s",PIECES[p][d]);
+      if(p==LEAF){
+        printf("%c",leafs[d]);
+      }else if(p==SEGMENT){
+        printf("%c",segments[d]);
+      }else if(p==CORNER){
+        printf("%s",corners[d]);
+      }else if(p==TEE){
+        printf("%s",tees[d]);
+      }
     }
     printf("\n");
   }

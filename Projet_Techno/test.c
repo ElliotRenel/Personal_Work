@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+char leafs[4]={'^','>','v','<'};
+char segments[4] = {'|','-','|','-'};
+char corners[4][5] = {"└","┌","┐","┘"};
+char tees[4][5] = {"┴","├","┬","┤"};
+
 int main (int argc, char* argv[], char* env[]){
 
 
 
-	char s[] = "┬";
-	for(int i = 0; i<4; i++){
-		printf("%c\n",s[i]);
-	}
-	printf("%s\n",s);
-
+	printf("%s",corners[1]);
+	printf("%s",tees[0]);
+	printf("\n");
 
 
 /*

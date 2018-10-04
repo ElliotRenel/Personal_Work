@@ -13,7 +13,7 @@ int main (int argc, char* argv[], char* env[]){
 	printf("%s",corners[1]);
 	printf("%s",tees[0]);
 	printf("\n");
-
+	printf("Coucou");
 
 /*
 	char tees[4]={(char)193,(char)195,(char)194,(char)180};

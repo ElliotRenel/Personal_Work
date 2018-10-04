@@ -4,7 +4,7 @@
 #include "game.h"
 #include "game_io.h"
 
-// #define clear() printf("\033[H\033[J")
+#define clear() printf("\033[H\033[J")
 
  char leafs[4]={'^','>','v','<'};
  char segments[4] = {'|','-','|','-'};
@@ -25,9 +25,9 @@ game default_game(cgame* soluce){
 void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
-  printf("\n\n");
+  printf("\n\n\t   0 1 2 3 4\n");
   for(int y=H-1; y>=0; y--){
-    printf("| ");
+    printf("|\t%d ",y);
     for(int x=0; x<W; x++){
       piece p = get_piece(g, x, y);
       direction d = get_current_dir(g, x, y);
@@ -41,17 +41,16 @@ void afficher_game(cgame g){
         printf(" %s",tees[d]);
       }
     }
-    printf("  |\n");
+    printf(" \t|\n");
   }
   printf("\n\n");
 }
 
 
-
 int main(void){
   cgame sol = new_game_empty();
   game g = default_game(&sol);
-  // clear();
+  clear();
   while(!is_game_over ((cgame) g)){
     afficher_game((cgame)g);
     int x, y;
@@ -59,7 +58,7 @@ int main(void){
     scanf("%d %d",&x,&y);
     if(!(x<0 || y<0 || x>=game_width((cgame)g) || y>=game_height((cgame)g))){
       rotate_piece_one(g, x, y);
-    }/*else{
+    }else{
       clear();
       printf("\n\n\nPosition invalide, essaie encore\n");
       sleep(1);
@@ -68,13 +67,13 @@ int main(void){
         sleep(1);
       }
     }
-    clear();*/
+    clear();
   }
   afficher_game((cgame)g);
-/*
+
   printf("\n\nBravo : tu as réussi !\n\n");;
   sleep(5);
-  clear();*/
+  clear();
 
   return EXIT_SUCCESS;
 }

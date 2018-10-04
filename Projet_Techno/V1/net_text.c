@@ -27,17 +27,17 @@ void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
   for(int y=H-1; y>=0; y--){
-    for(int x=0; x>=W-1; x++){
+    for(int x=0; x<W; x++){
       piece p = get_piece(g, x, y);
       direction d = get_current_dir(g, x, y);
       if(p==LEAF){
-        printf("%c",leafs[d]);
+        printf(" %c",leafs[d]);
       }else if(p==SEGMENT){
-        printf("%c",segments[d]);
+        printf(" %c",segments[d]);
       }else if(p==CORNER){
-        printf("%s",corners[d]);
+        printf(" %s",corners[d]);
       }else if(p==TEE){
-        printf("%s",tees[d]);
+        printf(" %s",tees[d]);
       }
     }
     printf("\n");

@@ -11,9 +11,6 @@
  char tees[4][5] = {"┴","├","┬","┤"};
 
 
-
-
-
 game default_game(cgame* soluce){
   piece pe[25]={LEAF,LEAF,LEAF,TEE,CORNER,SEGMENT,CORNER,TEE,CORNER,LEAF,TEE,TEE,SEGMENT,LEAF,LEAF,LEAF,TEE,SEGMENT,SEGMENT,CORNER,LEAF,TEE,SEGMENT,SEGMENT,LEAF};
   direction dir[25]={N,N,E,N,W,N,E,N,S,S,E,N,E,W,N,S,E,E,E,S,E,S,W,W,W};
@@ -27,8 +24,9 @@ game default_game(cgame* soluce){
 void afficher_game(cgame g){
   int H = game_height(g);
   int W = game_width(g);
-  printf("\n");
+  printf("\n\n");
   for(int y=H-1; y>=0; y--){
+    printf("|\t\t");
     for(int x=0; x<W; x++){
       piece p = get_piece(g, x, y);
       direction d = get_current_dir(g, x, y);
@@ -42,8 +40,9 @@ void afficher_game(cgame g){
         printf(" %s",tees[d]);
       }
     }
-    printf("\n");
+    printf("\t\t|\n");
   }
+  printf("\n\n");
 }
 
 
@@ -56,12 +55,11 @@ int main(void){
     int x, y;
     printf("Coordonees de la piece a tourner (format <x> <y>): ");
     scanf("%d %d",&x,&y);
-    if(x<0 || y<0 || x>=game_width((cgame)g) || y>=game_height((cgame)g)){
-      printf("Position invalide !\nDoit avoir 0 < x < %d et 0 < y < %d\n",game_width((cgame)g),game_height((cgame)g));
-      sleep(10);
-      continue;
+    if(!(x<0 || y<0 || x>=game_width((cgame)g) || y>=game_height((cgame)g))){
+      rotate_piece_one(g, x, y);
     }
   }
-
+  afficher_game((cgame)g);
+  
   return EXIT_SUCCESS;
 }

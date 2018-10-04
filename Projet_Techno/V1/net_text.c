@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "game.h"
 #include "game_io.h"
 
@@ -55,7 +56,11 @@ int main(void){
     int x, y;
     printf("Coordonees de la piece a tourner (format <x> <y>): ");
     scanf("%d %d",&x,&y);
-
+    if(x<0 || y<0 || x>=game_width((cgame)g) || y>=game_height((cgame)g)){
+      printf("Position invalide !\nDoit avoir 0 < x < %d et 0 < y < %d\n",game_width((cgame)g),game_height((cgame)g));
+      sleep(10);
+      continue;
+    }
   }
 
   return EXIT_SUCCESS;

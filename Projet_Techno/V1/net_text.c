@@ -71,10 +71,10 @@ int main(void){
     clear();*/
   }
   afficher_game((cgame)g);
-
+/*
   printf("\n\nBravo : tu as réussi !\n\n");;
   sleep(5);
-  clear();
+  clear();*/
 
   return EXIT_SUCCESS;
 }

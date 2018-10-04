@@ -48,7 +48,14 @@ void afficher_game(cgame g){
 int main(void){
   cgame sol = new_game_empty();
   game g = default_game(&sol);
-  afficher_game((cgame)g);
+
+  while(!is_game_over ((cgame) g)){
+    afficher_game((cgame)g);
+    int x, y;
+    printf("Coordonees de la piece a tourner (format <x> <y>): ");
+    scanf("%d %d",&x,&y);
+    
+  }
 
   return EXIT_SUCCESS;
 }

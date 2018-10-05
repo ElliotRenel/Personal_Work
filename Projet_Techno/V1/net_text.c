@@ -12,12 +12,10 @@
  char tees[4][5] = {"┴","├","┬","┤"};
 
 
-game default_game(cgame* soluce){
-  piece pe[25]={LEAF,LEAF,LEAF,TEE,CORNER,SEGMENT,CORNER,TEE,CORNER,LEAF,TEE,TEE,SEGMENT,LEAF,LEAF,LEAF,TEE,SEGMENT,SEGMENT,CORNER,LEAF,TEE,SEGMENT,SEGMENT,LEAF};
-  direction dir[25]={N,N,E,N,W,N,E,N,S,S,E,N,E,W,N,S,E,E,E,S,E,S,W,W,W};
-  *(soluce) = new_game(pe, dir);
-  game g = (game)(*soluce);
-  shuffle_dir(g);
+game default_game(void){
+  piece pe[25]={LEAF,TEE,LEAF,LEAF,LEAF,LEAF,TEE,TEE,CORNER,SEGMENT,LEAF,LEAF,TEE,LEAF,SEGMENT,TEE,TEE,TEE,TEE,TEE,CORNER,LEAF,LEAF,CORNER,LEAF};
+  direction dir[25]={E,W,S,E,S,S,S,N,W,N,E,N,W,W,W,S,W,N,E,E,W,N,W,N,S};
+  game g = (game)new_game(pe, dir);
   return g;
 }
 
@@ -48,8 +46,7 @@ void afficher_game(cgame g){
 
 
 int main(void){
-  cgame sol = new_game_empty();
-  game g = default_game(&sol);
+  game g = default_game();
   clear();
   while(!is_game_over ((cgame) g)){
     afficher_game((cgame)g);

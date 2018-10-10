@@ -1,1 +1,0 @@
-net_text.o: net_text.c game.h game_io.h

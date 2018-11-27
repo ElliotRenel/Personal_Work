@@ -1,132 +1,111 @@
-# DO NOT MODIFY THIS FILE!
+# PUT YOUR CODE IN THIS FILE!
 
-.pos 0x100
-
-# Nota Bene: The picture below represents the heap layout for different configurations, 
-# with all consecutive blocks. The 12-bytes of metadata before each block are not shown. 
-# The letter 'f' means a block is free (1), while the letter 'u' means a block is used (2).
-
-########## HEAP0 ##########
-
-# This function initialize a heap of size 256 bytes with the following layout:
-
-# |-----------------------------|
-# | 244f                        |
-# |-----------------------------|
-
-heap0:
-    ### block[0] (244 bytes, free)
-    irmovl 0x30C, %edx          # block[0] address (heap+12)
-    irmovl 244, %eax
-    rmmovl %eax, -12(%edx)      # set block[0] -> size (244 bytes)
-    irmovl 1, %eax
-    rmmovl %eax, -8(%edx)       # set block[0] -> flag (free)
-    irmovl 0, %eax
-    rmmovl %eax, -4(%edx)       # set block[0] -> next (null)
-    ret
-
-########## HEAP1 ##########
-
-# This function initialize a heap of size 256 bytes with the following layout:
-
-# |-----|-----------------------|
-# | 40u | 192f                  |
-# |-----|-----------------------|
-
-# It corresponds to the following code:
-#
-# void * b0 = malloc(40);
-
-heap1:
-    ### block[0] (40 bytes, used)
-    irmovl 0x30C, %edx          # block[0] address (heap+12)
-    irmovl 40, %eax
-    rmmovl %eax, -12(%edx)      # set block[0] -> size (40 bytes)
-    irmovl 2, %eax
-    rmmovl %eax, -8(%edx)       # set block[0] -> flag (used)
-    irmovl 0x340, %eax
-    rmmovl %eax, -4(%edx)       # set block[0] -> next (block[1])
-    ### block[1] (192 bytes, free)
-    irmovl 0x340, %edx          # block[1] address (block[0]+40+12)
-    irmovl 192, %eax
-    rmmovl %eax, -12(%edx)      # set block[1] -> size (192 bytes)
-    irmovl 1, %eax
-    rmmovl %eax, -8(%edx)       # set block[1] -> flag (free)
-    irmovl 0, %eax
-    rmmovl %eax, -4(%edx)       # set block[1] -> next (null)
-    ret
-
-########## HEAP2 ##########
-
-# This function initialize a heap of size 512 bytes with the following layout:
-
-# |-----|-----|-----|-----------|
-# | 40u | 40f | 60u | 324f      |
-# |-----|-----|-----|-----------|
-
-# It corresponds to the following code:
-#
-# void * b0 = malloc(40);
-# void * b1 = malloc(40);
-# void * b2 = malloc(60);
-# free(b1);
-
-heap2:
-    ### block[0] (40 bytes, used)
-    irmovl 0x30C, %edx          # block[0] address (heap+12)
-    irmovl 40, %eax
-    rmmovl %eax, -12(%edx)      # set block[0] -> size (40 bytes)
-    irmovl 2, %eax
-    rmmovl %eax, -8(%edx)       # set block[0] -> flag (used)
-    irmovl 0x340, %eax
-    rmmovl %eax, -4(%edx)       # set block[0] -> next (block[1])
-    ### block[1] (40 bytes, free)
-    irmovl 0x340, %edx          # block[1] address (block[0]+40+12)
-    irmovl 40, %eax
-    rmmovl %eax, -12(%edx)      # set block[1] -> size (40 bytes)
-    irmovl 1, %eax
-    rmmovl %eax, -8(%edx)       # set block[1] -> flag (free)
-    irmovl 0x374, %eax
-    rmmovl %eax, -4(%edx)       # set block[1] -> next (block[2])
-    ### block[2] (60 bytes, used)
-    irmovl 0x374, %edx          # block[2] address (block[1]+40+12)
-    irmovl 60, %eax
-    rmmovl %eax, -12(%edx)      # set block[2] -> size (60 bytes)
-    irmovl 2, %eax
-    rmmovl %eax, -8(%edx)       # set block[2] -> flag (used)
-    irmovl 0x3bc, %eax
-    rmmovl %eax, -4(%edx)       # set block[2] -> next (block[3])
-    ### block[3] (68 bytes, free)
-    irmovl 0x3bc, %edx          # block[3] address (block[2]+60+12)
-    irmovl 324, %eax
-    rmmovl %eax, -12(%edx)      # set block[3] -> size (324 bytes)
-    irmovl 1, %eax
-    rmmovl %eax, -8(%edx)       # set block[3] -> flag (free)
-    irmovl 0, %eax
-    rmmovl %eax, -4(%edx)       # set block[3] -> next (null)
-    ret
-
-
-########## STACK ##########
-
-.pos 0x200
-stacklimit:
-## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
-## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
-## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
-## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
-.pos 0x300
-stack:
-
-########## HEAP ##########
-
-.pos 0x300
-heap:
-## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
-## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
-## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
-## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
 .pos 0x500
-heaplimit:
+library:
+
+########## HEAPADDR ##########
+
+# void * heapaddr()
+#
+# This function returns the base heap address, as defined
+# in memory.ys by the heap tag.
+
+heapaddr:
+    irmovl 768,%eax
+    ret
+
+########## HEAPINIT ##########
+
+# long heapinit(long size)
+#
+# This function initializes the heap with a single free block of
+# a given size (in bytes). This size must not exceed the heap limit
+# defined by "heaplimit" tag in memory.ys.
+# It returns 1 on success, and 0 on failure.
+
+heapinit:
+    
+    ret
+
+########## NUMBLOCKS ##########
+
+# long numblocks()
+#
+# This function returns the total number of blocks in heap.
+
+numblocks:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## HEAPSIZE ##########
+
+# long heapsize()
+#
+# This function returns the total heap size (in bytes), including
+# all blocks (with both data and metadata).
+
+heapsize:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## HEAPUSAGE ##########
+
+# long heapusage()
+#
+# This function returns the heap usage (in bytes), defined as
+# the sum of all data blocks used (without metadata).
+
+heapusage:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## BLOCKADDR ##########
+
+# void* blockaddr(long k)
+#
+# This function returns the address of data in the k-th block.
+# The block index k must be in range: k >= 0 && k < numblocks().
+# It returns NULL in case of error.
+
+blockaddr:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## BLOCKSIZE ##########
+
+# long blocksize(long k)
+#
+# This function returns the actual data size (in bytes) of the k-th block.
+# The size of metadata are not taken into account.
+# The block index k must be in range: k >= 0 && k < numblocks().
+# It returns 0 in case of error.
+
+blocksize:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## BLOCKFLAG ##########
+
+# long blockflag(long k)
+#
+# This function returns the flag of the k-th block.
+# The block index k must be in range: k >= 0 && k < numblocks().
+# It returns 0 in case of error.
+
+blockflag:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
 
 # EOF

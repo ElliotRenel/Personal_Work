@@ -1,0 +1,132 @@
+# DO NOT MODIFY THIS FILE!
+
+.pos 0x100
+
+# Nota Bene: The picture below represents the heap layout for different configurations, 
+# with all consecutive blocks. The 12-bytes of metadata before each block are not shown. 
+# The letter 'f' means a block is free (1), while the letter 'u' means a block is used (2).
+
+########## HEAP0 ##########
+
+# This function initialize a heap of size 256 bytes with the following layout:
+
+# |-----------------------------|
+# | 244f                        |
+# |-----------------------------|
+
+heap0:
+    ### block[0] (244 bytes, free)
+    irmovl 0x30C, %edx          # block[0] address (heap+12)
+    irmovl 244, %eax
+    rmmovl %eax, -12(%edx)      # set block[0] -> size (244 bytes)
+    irmovl 1, %eax
+    rmmovl %eax, -8(%edx)       # set block[0] -> flag (free)
+    irmovl 0, %eax
+    rmmovl %eax, -4(%edx)       # set block[0] -> next (null)
+    ret
+
+########## HEAP1 ##########
+
+# This function initialize a heap of size 256 bytes with the following layout:
+
+# |-----|-----------------------|
+# | 40u | 192f                  |
+# |-----|-----------------------|
+
+# It corresponds to the following code:
+#
+# void * b0 = malloc(40);
+
+heap1:
+    ### block[0] (40 bytes, used)
+    irmovl 0x30C, %edx          # block[0] address (heap+12)
+    irmovl 40, %eax
+    rmmovl %eax, -12(%edx)      # set block[0] -> size (40 bytes)
+    irmovl 2, %eax
+    rmmovl %eax, -8(%edx)       # set block[0] -> flag (used)
+    irmovl 0x340, %eax
+    rmmovl %eax, -4(%edx)       # set block[0] -> next (block[1])
+    ### block[1] (192 bytes, free)
+    irmovl 0x340, %edx          # block[1] address (block[0]+40+12)
+    irmovl 192, %eax
+    rmmovl %eax, -12(%edx)      # set block[1] -> size (192 bytes)
+    irmovl 1, %eax
+    rmmovl %eax, -8(%edx)       # set block[1] -> flag (free)
+    irmovl 0, %eax
+    rmmovl %eax, -4(%edx)       # set block[1] -> next (null)
+    ret
+
+########## HEAP2 ##########
+
+# This function initialize a heap of size 512 bytes with the following layout:
+
+# |-----|-----|-----|-----------|
+# | 40u | 40f | 60u | 324f      |
+# |-----|-----|-----|-----------|
+
+# It corresponds to the following code:
+#
+# void * b0 = malloc(40);
+# void * b1 = malloc(40);
+# void * b2 = malloc(60);
+# free(b1);
+
+heap2:
+    ### block[0] (40 bytes, used)
+    irmovl 0x30C, %edx          # block[0] address (heap+12)
+    irmovl 40, %eax
+    rmmovl %eax, -12(%edx)      # set block[0] -> size (40 bytes)
+    irmovl 2, %eax
+    rmmovl %eax, -8(%edx)       # set block[0] -> flag (used)
+    irmovl 0x340, %eax
+    rmmovl %eax, -4(%edx)       # set block[0] -> next (block[1])
+    ### block[1] (40 bytes, free)
+    irmovl 0x340, %edx          # block[1] address (block[0]+40+12)
+    irmovl 40, %eax
+    rmmovl %eax, -12(%edx)      # set block[1] -> size (40 bytes)
+    irmovl 1, %eax
+    rmmovl %eax, -8(%edx)       # set block[1] -> flag (free)
+    irmovl 0x374, %eax
+    rmmovl %eax, -4(%edx)       # set block[1] -> next (block[2])
+    ### block[2] (60 bytes, used)
+    irmovl 0x374, %edx          # block[2] address (block[1]+40+12)
+    irmovl 60, %eax
+    rmmovl %eax, -12(%edx)      # set block[2] -> size (60 bytes)
+    irmovl 2, %eax
+    rmmovl %eax, -8(%edx)       # set block[2] -> flag (used)
+    irmovl 0x3bc, %eax
+    rmmovl %eax, -4(%edx)       # set block[2] -> next (block[3])
+    ### block[3] (68 bytes, free)
+    irmovl 0x3bc, %edx          # block[3] address (block[2]+60+12)
+    irmovl 324, %eax
+    rmmovl %eax, -12(%edx)      # set block[3] -> size (324 bytes)
+    irmovl 1, %eax
+    rmmovl %eax, -8(%edx)       # set block[3] -> flag (free)
+    irmovl 0, %eax
+    rmmovl %eax, -4(%edx)       # set block[3] -> next (null)
+    ret
+
+
+########## STACK ##########
+
+.pos 0x200
+stacklimit:
+## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
+## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
+## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
+## ∧∧∧∧∧∧∧∧∧∧∧∧∧∧
+.pos 0x300
+stack:
+
+########## HEAP ##########
+
+.pos 0x300
+heap:
+## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+## ∨∨∨∨∨∨∨∨∨∨∨∨∨∨
+.pos 0x500
+heaplimit:
+
+# EOF

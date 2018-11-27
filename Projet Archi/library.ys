@@ -11,7 +11,7 @@ library:
 # in memory.ys by the heap tag.
 
 heapaddr:
-    irmovl 768,%eax
+    irmovl 0x300,%eax
     ret
 
 ########## HEAPINIT ##########
@@ -24,7 +24,20 @@ heapaddr:
 # It returns 1 on success, and 0 on failure.
 
 heapinit:
-    
+    mrmovl 4(%esp),%ecx 
+    irmovl 0x200, %edx
+    irmovl 1,%eax
+    subl %ecx, %edx
+    jl mem_fail
+    irmovl 0x30C,%edx
+    rmmovl %ecx, -12(%edx)     
+    irmovl 1, %ecx
+    rmmovl %ecx, -8(%edx)       
+    irmovl 0, %ecx
+    rmmovl %ecx, -4(%edx)
+    ret
+mem_fail:
+    isubl 1,%eax
     ret
 
 ########## NUMBLOCKS ##########

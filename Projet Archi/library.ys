@@ -47,9 +47,16 @@ mem_fail:
 # This function returns the total number of blocks in heap.
 
 numblocks:
-
-    ### PUT YOUR CODE HERE ###
-
+    irmovl 0,%eax
+    irmovl 0x30C, %edx
+start:
+    iaddl 1,%eax
+    mrmovl -4(%edx),%ebx
+    andl %ebx,%ebx
+    je end
+    rrmovl %ebx,%edx
+    jmp start
+end:
     ret
 
 ########## HEAPSIZE ##########
@@ -60,9 +67,18 @@ numblocks:
 # all blocks (with both data and metadata).
 
 heapsize:
-
-    ### PUT YOUR CODE HERE ###
-
+    irmovl 0,%eax
+    irmovl 0x30C, %edx
+start:
+    mrmovl -12(%edx), %ecx
+    addl %ecx, %eax
+    iaddl 12,%eax
+    mrmovl -4(%edx),%ebx
+    andl %ebx,%ebx
+    je end
+    rrmovl %ebx,%edx
+    jmp start
+end:
     ret
 
 ########## HEAPUSAGE ##########
@@ -73,9 +89,21 @@ heapsize:
 # the sum of all data blocks used (without metadata).
 
 heapusage:
-
-    ### PUT YOUR CODE HERE ###
-
+    irmovl 0,%eax
+    irmovl 0x30C, %edx 
+start:
+    mrmovl -8(%edx),%ecx
+    isubl 1,%ecx
+    jle skip
+    mrmovl -12(%edx),%ecx 
+    addl %ecx, %eax
+skip:
+    mrmovl -4(%edx),%ebx
+    andl %ebx, %ebx 
+    je end
+    rrmovl %ebx, %edx
+    jmp start
+end:
     ret
 
 ########## BLOCKADDR ##########

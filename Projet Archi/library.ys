@@ -11,7 +11,7 @@ library:
 # in memory.ys by the heap tag.
 
 heapaddr:
-    irmovl 0x300,%eax
+    irmovl 0x30C,%eax
     ret
 
 ########## HEAPINIT ##########
@@ -102,11 +102,20 @@ huend:    ret
 # The block index k must be in range: k >= 0 && k < numblocks().
 # It returns NULL in case of error.
 
-blockaddr:
-
-    ### PUT YOUR CODE HERE ###
-
-    ret
+blockaddr:  mrmovl 4(%esp),%ecx
+    andl %ecx,%ecx
+    jl baerror
+    irmovl 0x30C, %eax
+kblock: mrmovl -4(%eax),%ebx
+    isubl 1,%ecx
+    jl baend
+    rrmovl %ebx, %eax
+    andl %eax, %eax
+    je baerror
+    jmp kblock
+baend:  ret
+baerror:  irmovl 0x0,%eax
+    jmp baend
 
 ########## BLOCKSIZE ##########
 
@@ -117,11 +126,21 @@ blockaddr:
 # The block index k must be in range: k >= 0 && k < numblocks().
 # It returns 0 in case of error.
 
-blocksize:
-
-    ### PUT YOUR CODE HERE ###
-
-    ret
+blocksize:  mrmovl 4(%esp),%ecx
+    andl %ecx,%ecx
+    jl bserror
+    irmovl 0x30C, %esi
+kblock2: mrmovl -4(%esi),%ebx
+    isubl 1,%ecx
+    jl bsfound 
+    rrmovl %ebx, %esi
+    andl %esi, %esi
+    je bserror
+    jmp kblock2
+bsfound: mrmovl -12(%esi),%eax
+bsend:  ret
+bserror:  irmovl 0,%eax
+    jmp bsend
 
 ########## BLOCKFLAG ##########
 

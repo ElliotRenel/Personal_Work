@@ -14,13 +14,13 @@ test:
     ### initialize heap
     # call heap0            # provided by teacher (memory.ys)
     # call heap1            # provided by teacher (memory.ys)
-    # call heap2              # provided by teacher (memory.ys)
+    call heap2              # provided by teacher (memory.ys)
 
     ### heapinit(256)
-    irmovl 256,%eax
-    pushl %eax
-    call heapinit
-    iaddl 4, %esp
+    # irmovl 256,%eax
+    # pushl %eax
+    # call heapinit
+    # iaddl 4, %esp
 
     # reset %eax with a dummy value before test
     irmovl 0xffffffff, %eax
@@ -34,8 +34,8 @@ test:
     irmovl 2, %ecx
     pushl %ecx
     call blockaddr
-    # call blocksize
-    # call blockflag
+    call blocksize
+    call blockflag
     iaddl 4, %esp
 
     ret

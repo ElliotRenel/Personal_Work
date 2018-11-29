@@ -23,8 +23,7 @@ heapaddr:
 # defined by "heaplimit" tag in memory.ys.
 # It returns 1 on success, and 0 on failure.
 
-heapinit:
-    mrmovl 4(%esp),%ecx 
+heapinit:    mrmovl 4(%esp),%ecx 
     irmovl 0x200, %edx
     irmovl 1,%eax
     subl %ecx, %edx
@@ -36,8 +35,7 @@ heapinit:
     irmovl 0, %ecx
     rmmovl %ecx, -4(%edx)
     ret
-mem_fail:
-    isubl 1,%eax
+mem_fail:    isubl 1,%eax
     ret
 
 ########## NUMBLOCKS ##########
@@ -46,18 +44,15 @@ mem_fail:
 #
 # This function returns the total number of blocks in heap.
 
-numblocks:
-    irmovl 0,%eax
+numblocks:    irmovl 0,%eax
     irmovl 0x30C, %edx
-start:
-    iaddl 1,%eax
+nbstart:    iaddl 1,%eax
     mrmovl -4(%edx),%ebx
     andl %ebx,%ebx
-    je end
+    je nbend
     rrmovl %ebx,%edx
-    jmp start
-end:
-    ret
+    jmp nbstart
+nbend:    ret
 
 ########## HEAPSIZE ##########
 
@@ -66,20 +61,17 @@ end:
 # This function returns the total heap size (in bytes), including
 # all blocks (with both data and metadata).
 
-heapsize:
-    irmovl 0,%eax
+heapsize:    irmovl 0,%eax
     irmovl 0x30C, %edx
-start:
-    mrmovl -12(%edx), %ecx
+hsstart:    mrmovl -12(%edx), %ecx
     addl %ecx, %eax
     iaddl 12,%eax
     mrmovl -4(%edx),%ebx
     andl %ebx,%ebx
-    je end
+    je hsend
     rrmovl %ebx,%edx
-    jmp start
-end:
-    ret
+    jmp hsstart
+hsend:    ret
 
 ########## HEAPUSAGE ##########
 
@@ -88,23 +80,19 @@ end:
 # This function returns the heap usage (in bytes), defined as
 # the sum of all data blocks used (without metadata).
 
-heapusage:
-    irmovl 0,%eax
+heapusage:    irmovl 0,%eax
     irmovl 0x30C, %edx 
-start:
-    mrmovl -8(%edx),%ecx
+hustart:    mrmovl -8(%edx),%ecx
     isubl 1,%ecx
-    jle skip
+    jle huskip
     mrmovl -12(%edx),%ecx 
     addl %ecx, %eax
-skip:
-    mrmovl -4(%edx),%ebx
+huskip:    mrmovl -4(%edx),%ebx
     andl %ebx, %ebx 
-    je end
+    je huend
     rrmovl %ebx, %edx
-    jmp start
-end:
-    ret
+    jmp hustart
+huend:    ret
 
 ########## BLOCKADDR ##########
 

@@ -14,21 +14,21 @@ test:
     ### initialize heap
     # call heap0            # provided by teacher (memory.ys)
     # call heap1            # provided by teacher (memory.ys)
-    call heap2              # provided by teacher (memory.ys)
+    # call heap2              # provided by teacher (memory.ys)
 
     ### heapinit(256)
-    # irmovl 256,%eax
-    # pushl %eax
-    # call heapinit
-    # iaddl 4, %esp
+    irmovl 256,%eax
+    pushl %eax
+    call heapinit
+    iaddl 4, %esp
 
     # reset %eax with a dummy value before test
     irmovl 0xffffffff, %eax
 
     ### test heap
-    # call heapusage
-    # call heapsize
-    # call numblocks
+    call heapusage
+    call heapsize
+    call numblocks
 
     ### test k-th block
     irmovl 2, %ecx

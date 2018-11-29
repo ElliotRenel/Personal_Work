@@ -24,7 +24,7 @@ heapaddr:
 # It returns 1 on success, and 0 on failure.
 
 heapinit:    mrmovl 4(%esp),%ecx 
-    irmovl 0x200, %edx
+    irmovl 0x1F4, %edx
     irmovl 1,%eax
     subl %ecx, %edx
     jl mem_fail
@@ -150,10 +150,21 @@ bserror:  irmovl 0,%eax
 # The block index k must be in range: k >= 0 && k < numblocks().
 # It returns 0 in case of error.
 
-blockflag:
+blockflag:  mrmovl 4(%esp),%ecx
+    andl %ecx,%ecx
+    jl bferror
+    irmovl 0x30C, %esi
+kblock3: mrmovl -4(%esi),%ebx
+    isubl 1,%ecx
+    jl bffound 
+    rrmovl %ebx, %esi
+    andl %esi, %esi
+    je bferror
+    jmp kblock3
+bffound: mrmovl -8(%esi),%eax
+bfend:  ret
+bferror:  irmovl 0,%eax
+    jmp bfend
 
-    ### PUT YOUR CODE HERE ###
-
-    ret
 
 # EOF

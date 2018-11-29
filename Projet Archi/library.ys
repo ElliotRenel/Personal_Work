@@ -11,7 +11,7 @@ library:
 # in memory.ys by the heap tag.
 
 heapaddr:
-    irmovl 0x30C,%eax
+    irmovl 0x300,%eax
     ret
 
 ########## HEAPINIT ##########

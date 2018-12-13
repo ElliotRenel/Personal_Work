@@ -24,11 +24,12 @@ heapaddr:
 # It returns 1 on success, and 0 on failure.
 
 heapinit:    mrmovl 4(%esp),%ecx 
-    irmovl 0x1F4, %edx
+    irmovl 0x200, %edx
     irmovl 1,%eax
     subl %ecx, %edx
     jl mem_fail
     irmovl 0x30C,%edx
+    isubl 12,%ecx
     rmmovl %ecx, -12(%edx)     
     irmovl 1, %ecx
     rmmovl %ecx, -8(%edx)       
@@ -165,6 +166,58 @@ bffound: mrmovl -8(%esi),%eax
 bfend:  ret
 bferror:  irmovl 0,%eax
     jmp bfend
+
+
+########## LOOKUP ##########
+
+# void * lookup(long size)
+#
+# This function lookups in heap for the first free block with enough memory,
+# i.e. the asked "size" is lower or equal to the block data size.
+# And it returns the data address of the block found (or NULL if no blocks were found).
+# If asked "size" is 0, it returns the data address of the first free block.
+
+lookup:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+########## SPLIT ##########
+
+# void* split(void* blkaddr, long size)
+#
+# This function splits a block "b0" (at data address "blkaddr") in two adajacent sub-blocks
+# "b1" (at same place as "b0") and "b2", such that these blocks are correctly linked in heap.
+# The first block "b1" will contain "size" bytes of data, while the second block "b2" will use
+# the remaining space (including its metadata). Both block flags are set to free (1). It returns
+# the data address of the first block "b1" or NULL if any error occurs. Especially, if there is
+# not enough space to create the second block (i.e. remaining space < 12 bytes).
+
+split:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
+
+
+########## MALLOC ##########
+
+# void* malloc(long size)
+#
+# This function allocates "size" bytes in heap. First, it lookups for a free block "b0"
+# with enough memory(for both data and metadata). If "b0" is large enough, it will split
+# it in a used block "b1" (at same place as "b0") with the asked size and a free block "b2"
+# with remaining space. Else, if "b2" cannot be created, then "b1" will take up all the
+# space of "b0", and its returned size may be greater or equal to asked size.
+# It returns the data address of the new allocated block "b1" and sets its flag to used (2).
+# If not enough memory is available in heap (or if any errors occur), NULL is returned.
+
+malloc:
+
+    ### PUT YOUR CODE HERE ###
+
+    ret
 
 
 # EOF

@@ -29,12 +29,27 @@ lookup:
 # the data address of the first block "b1" or NULL if any error occurs. Especially, if there is
 # not enough space to create the second block (i.e. remaining space < 12 bytes).
 
-split:
-
-    ### PUT YOUR CODE HERE ###
-
+split:  mrmovl 4(%esp), %eax
+    andl %eax, %eax 
+    je split_err
+    mrmovl 8(%esp), %ecx
+    mrmovl -12(%eax), %edx
+    subl %ecx, %edx 
+    isubl 12, %edx
+    jl split_err
+    rmmovl %ecx,-12(%eax)
+    iaddl 12, %ecx
+    addl %eax, %ecx
+    mrmovl -4(%eax), %ebx
+    rmmovl %ecx,-4(%eax)
+    rmmovl %edx, -12(%ecx)
+    irmovl 1, %edx
+    rmmovl %edx,-8(%eax)
+    rmmovl %edx,-8(%ecx)
+    rmmovl %ebx, -4(%ecx)
     ret
-
+split_err:  irmovl 0x0, %eax
+    ret
 
 ########## MALLOC ##########
 

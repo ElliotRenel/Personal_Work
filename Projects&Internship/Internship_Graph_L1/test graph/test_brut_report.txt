@@ -1,0 +1,94 @@
+oriente 1 (11s, 12e):
+min : 3
+max : 4
+moyenne : 3.09
+
+oriente 2 (21s, 26e):
+min : 4
+max : 5
+moyenne : 4.19
+
+oriente 3 (16s, 18e):
+min : 3
+max : 4
+moyenne : 3.68
+
+oriente 4 (50s, 53e):
+min : 5
+max : 6
+moyenne : 5.58
+
+oriente 5 (29s, 32e):
+min : 4
+max : 5
+moyenne : 4.68
+
+oriente 6 (23s, 30e):
+min : 4
+max : 5
+moyenne : 4.34
+
+
+
+
+relou témoin (20s, 19e):
+min : 4
+max : 5
+moyenne : 4.09
+
+relou 1 (20s, 36e):
+min : 4
+max : 5
+moyenne : 4.09
+
+relou 2 (20s, 27e):
+min : 3
+max : 6
+moyenne : 4.25
+
+relou 3 (20s, 28e):
+min : 3
+max : 6
+moyenne : 4.25
+
+relou 4 (20s, 28e):
+min : 3
+max : 6
+moyenne : 4.3
+
+relou 5 (20s, 28e):
+min : 4
+max :5
+moyenne : 4.09
+
+relou 6 (20s, 26e):
+min : 4
+max :5
+moyenne : 4.09
+
+relou 7 (20s, 25e):
+min : 3 
+max : 5 
+moyenne : 4.15
+
+relou témoin 50 (50s, 49e):
+min : 5
+max : 6
+moyenne : 5.58
+
+relou 50 (50s, 53e):
+min : 5
+max : 6
+moyenne : 5.58
+
+relou 50 2 (50s, 73e)
+min : 5
+max : 7
+moyenne : 5.64
+
+relou 50 3 (50s, 73e)
+min : 4
+max : 8
+moyenne : 5.82
+
+légende : (Xs, Ye) >> X quantité de sommets et Y quantité d'arrêtes (edges)

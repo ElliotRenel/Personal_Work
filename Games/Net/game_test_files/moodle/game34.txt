@@ -1,0 +1,4 @@
+4 3 N
+LN CE LS LW
+CW TE TE TW
+LN CN CS LS

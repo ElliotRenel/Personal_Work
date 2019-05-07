@@ -1,0 +1,4 @@
+3 3 N
+LE LW LS
+TE TW SE
+LS CE CS

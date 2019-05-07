@@ -1,0 +1,4 @@
+3 3 N
+LN CN LN
+CN FN CN
+LN CN LN
